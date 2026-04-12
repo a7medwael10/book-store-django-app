@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create Author{% endblock %}
+{% block app_css %}<link rel="stylesheet" href="{% static 'authors/css/style.css' %}">{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-4">Create New Author</h1>
+        <form action="{% url 'authors.create' %}" method="post" novalidate>
+          {% csrf_token %}
+          {% include 'authors/partials/form_fields.html' with form=form %}
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary" type="submit">Save</button>
+            <a href="{% url 'authors.index' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

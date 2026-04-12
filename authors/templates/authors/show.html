@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ author.name }}{% endblock %}
+{% block app_css %}<link rel="stylesheet" href="{% static 'authors/css/style.css' %}">{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0">
+  <div class="card-body p-4">
+    <h2 class="card-title mb-2">{{ author.name }}</h2>
+    <p class="text-muted mb-4">{{ author.email }}</p>
+
+    <ul class="list-group list-group-flush mb-4">
+      <li class="list-group-item px-0"><strong>Gender:</strong> {{ author.get_gender_display }}</li>
+      <li class="list-group-item px-0"><strong>Bio:</strong> {{ author.bio|default:'No bio available.' }}</li>
+      <li class="list-group-item px-0"><strong>Created:</strong> {{ author.created_at|date:'Y-m-d H:i' }}</li>
+      <li class="list-group-item px-0"><strong>Updated:</strong> {{ author.updated_at|date:'Y-m-d H:i' }}</li>
+    </ul>
+
+    <h3 class="h5 mb-3">Books Authored</h3>
+    <div class="mb-4">
+      {% for book in author.books.all %}
+        <a href="{% url 'books.show' book.id %}" class="badge text-bg-light border text-decoration-none me-2 mb-2">{{ book.title }}</a>
+      {% empty %}
+        <p class="text-muted mb-0">This author has no books assigned yet.</p>
+      {% endfor %}
+    </div>
+
+    <div class="d-flex gap-2">
+      <a href="{% url 'authors.edit' author.id %}" class="btn btn-warning">Edit</a>
+      <a href="{% url 'authors.index' %}" class="btn btn-outline-secondary">Back</a>
+      <form action="{% url 'authors.delete' author.id %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" onclick="return confirm('Delete this author?')">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

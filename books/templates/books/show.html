@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ book.title }}{% endblock %}
+{% block app_css %}<link rel="stylesheet" href="{% static 'books/css/style.css' %}">{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ book.image.url }}" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ book.title }}">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body p-4">
+        <h2 class="card-title mb-3">{{ book.title }}</h2>
+        <p class="text-muted">{{ book.breif }}</p>
+        <ul class="list-group list-group-flush mb-4">
+          <li class="list-group-item px-0"><strong>Pages:</strong> {{ book.no_of_page }}</li>
+          <li class="list-group-item px-0"><strong>Price:</strong> ${{ book.price }}</li>
+          <li class="list-group-item px-0">
+            <strong>Authors:</strong>
+            {% for author in book.authors.all %}
+              <a href="{% url 'authors.show' author.id %}" class="text-decoration-none">{{ author.name }}</a>{% if not forloop.last %}, {% endif %}
+            {% empty %}
+              <span class="text-muted">No authors assigned</span>
+            {% endfor %}
+          </li>
+          <li class="list-group-item px-0"><strong>Created:</strong> {{ book.created_at|date:'Y-m-d H:i' }}</li>
+          <li class="list-group-item px-0"><strong>Updated:</strong> {{ book.updated_at|date:'Y-m-d H:i' }}</li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="{% url 'books.edit' book.id %}" class="btn btn-warning">Edit</a>
+          <a href="{% url 'books.index' %}" class="btn btn-outline-secondary">Back</a>
+          <form action="{% url 'books.delete' book.id %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger" onclick="return confirm('Delete this book?')">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

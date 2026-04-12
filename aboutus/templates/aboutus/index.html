@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+{% block app_css %}<link rel="stylesheet" href="{% static 'aboutus/css/style.css' %}">{% endblock %}
+
+{% block content %}
+<section class="p-4 p-md-5 rounded-3 text-bg-dark shadow-sm">
+  <h1 class="h3 mb-3">About Bookstore</h1>
+  <p class="mb-2">Bookstore is a sample Django project built with clean architecture and user-friendly design.</p>
+  <p class="mb-0">Our mission is to make book discovery simple, beautiful, and fast.</p>
+</section>
+{% endblock %}

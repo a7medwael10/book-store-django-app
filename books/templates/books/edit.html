@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Book{% endblock %}
+{% block app_css %}<link rel="stylesheet" href="{% static 'books/css/style.css' %}">{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-2">Edit Book</h1>
+        <p class="text-muted">{{ book.title }}</p>
+        <form action="{% url 'books.edit' book.id %}" method="post" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
+          {% include 'books/partials/form_fields.html' with form=form %}
+          <div class="mb-3">
+            <small class="text-muted d-block mb-2">Current image:</small>
+            <img src="{{ book.image.url }}" alt="{{ book.title }}" class="rounded edit-cover">
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-warning" type="submit">Update</button>
+            <a href="{% url 'books.show' book.id %}" class="btn btn-outline-secondary">Back</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
