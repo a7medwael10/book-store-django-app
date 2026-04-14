@@ -1,8 +1,9 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
+# from rest_framework.decorators import api_view
+# from rest_framework.response import Response
+# from rest_framework import status
 from books.models import Book
 from .serializers import  BookModelSerializer
+from rest_framework import viewsets
 
 
 # @api_view(['GET'])
@@ -58,7 +59,6 @@ from .serializers import  BookModelSerializer
     
     
     
-from rest_framework import viewsets
 
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()

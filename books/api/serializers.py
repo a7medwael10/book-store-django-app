@@ -36,7 +36,24 @@ from authors.api.serializers import AuthorSerializer
     
 class BookModelSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
+    author_id = serializers.PrimaryKeyRelatedField(
+        source='author',
+        queryset=Author.objects.all(),
+        allow_null=True,
+        required=False
+    )
 
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = [
+            'id',
+            'title',
+            'breif',
+            'image',
+            'author',
+            'author_id',
+            'no_of_page',
+            'price',
+            'created_at',
+            'updated_at',
+        ]
